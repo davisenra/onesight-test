@@ -1,5 +1,17 @@
-controllers:
+user_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/User/Controller/
+        namespace: App\User/Controller
+    type: attribute
+
+task_controllers:
+    resource:
+        path: ../src/Task/Controller/
+        namespace: App\Task/Controller
+    type: attribute
+
+auth_controllers:
+    resource:
+        path: ../src/Auth/Controller/
+        namespace: App\Auth/Controller
     type: attribute
