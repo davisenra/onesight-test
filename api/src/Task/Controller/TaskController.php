@@ -40,9 +40,46 @@ class TaskController extends AbstractController
         );
     }
 
+    #[Route('/v1/tasks/{id}', name: 'tasks_show', requirements: ['page' => '\d+'], methods: 'GET')]
+    public function show(int $id): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $task = $this->taskService->findUserTaskById($user, $id);
+
+        if (!$task) {
+            return new JsonResponse([
+                'status' => false,
+                'message' => 'Resource not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $data  = [
+            'status' => true,
+            'data' => $task,
+        ];
+
+        return JsonResponse::fromJsonString(
+            $this->serializer->serialize($data, 'json'),
+            Response::HTTP_OK
+        );
+    }
+
     #[Route('/v1/tasks', name: 'tasks_create', methods: 'POST')]
     public function store(#[MapRequestPayload] CreateTaskDto $payload): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        $task = $this->taskService->createTaskForUser($user, $payload);
 
+        $data  = [
+            'status' => true,
+            'data' => $task,
+        ];
+
+        return JsonResponse::fromJsonString(
+            $this->serializer->serialize($data, 'json'),
+            Response::HTTP_CREATED
+        );
     }
 }
