@@ -40,7 +40,7 @@ class TaskController extends AbstractController
         );
     }
 
-    #[Route('/v1/tasks/{id}', name: 'tasks_show', requirements: ['page' => '\d+'], methods: 'GET')]
+    #[Route('/v1/tasks/{id}', name: 'tasks_show', requirements: ['id' => '\d+'], methods: 'GET')]
     public function show(int $id): Response
     {
         /** @var User $user */
@@ -81,5 +81,43 @@ class TaskController extends AbstractController
             $this->serializer->serialize($data, 'json'),
             Response::HTTP_CREATED
         );
+    }
+
+    #[Route('/v1/tasks/{id}/done', name: 'tasks_toggle_status', requirements: ['id' => '\d+'], methods: 'PUT')]
+    public function toggleStatus(int $id): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $task = $this->taskService->findUserTaskById($user, $id);
+
+        if (!$task) {
+            return new JsonResponse([
+                'status' => false,
+                'message' => 'Resource not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->taskService->toggleTaskStatus($task);
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/v1/tasks/{id}', name: 'tasks_remove', requirements: ['id' => '\d+'], methods: 'DELETE')]
+    public function remove(int $id): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $task = $this->taskService->findUserTaskById($user, $id);
+
+        if (!$task) {
+            return new JsonResponse([
+                'status' => false,
+                'message' => 'Resource not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->taskService->removeTask($task);
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 }

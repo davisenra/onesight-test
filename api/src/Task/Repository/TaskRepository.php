@@ -30,4 +30,14 @@ class TaskRepository extends ServiceEntityRepository
             $em->flush();
         }
     }
+
+    public function delete(Task $task, bool $flush = true): void
+    {
+        $em = $this->getEntityManager();
+        $em->remove($task);
+
+        if ($flush) {
+            $em->flush();
+        }
+    }
 }

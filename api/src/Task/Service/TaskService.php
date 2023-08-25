@@ -48,4 +48,20 @@ class TaskService
             'id' => $taskId
         ]);
     }
+
+    public function toggleTaskStatus(Task $task): void
+    {
+        if ($task->getStatus() === TaskStatus::PENDING) {
+            $task->setStatus(TaskStatus::DONE);
+        } else {
+            $task->setStatus(TaskStatus::PENDING);
+        }
+
+        $this->taskRepository->saveOrUpdate($task);
+    }
+
+    public function removeTask(Task $task): void
+    {
+        $this->taskRepository->delete($task);
+    }
 }
