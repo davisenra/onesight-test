@@ -32,10 +32,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
     private Collection $tasks;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $updatedAt;
 
     public function __construct()
@@ -137,13 +137,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\PrePersist]
     public function onPrePersist(): void
     {
-        $this->createdAt = new \DateTimeImmutable('now');
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     #[ORM\PreUpdate]
     public function onPreUpdate(): void
     {
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTime('now');
     }
 }

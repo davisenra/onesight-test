@@ -6,6 +6,7 @@ use App\Task\Enum\TaskStatus;
 use App\Task\Repository\TaskRepository;
 use App\User\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 #[ORM\Table(name: '`tasks`')]
@@ -17,6 +18,7 @@ class Task
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User $user;
@@ -27,13 +29,13 @@ class Task
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(type: 'integer', enumType: TaskStatus::class)]
+    #[ORM\Column(type: 'string', enumType: TaskStatus::class)]
     private TaskStatus $status;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: 'date_immutable')]
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $updatedAt;
 
     public function getId(): ?int
@@ -81,12 +83,12 @@ class Task
         $this->status = $status;
     }
 
-    public function getCreationDate(): \DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getLastUpdateDate(): \DateTimeInterface
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -94,13 +96,13 @@ class Task
     #[ORM\PrePersist]
     public function onPrePersist(): void
     {
-        $this->createdAt = new \DateTimeImmutable('now');
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->createdAt = new \DateTime('now');
+        $this->updatedAt = new \DateTime('now');
     }
 
     #[ORM\PreUpdate]
     public function onPreUpdate(): void
     {
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new \DateTime('now');
     }
 }
