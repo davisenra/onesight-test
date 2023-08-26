@@ -22,7 +22,7 @@ class TaskService
      */
     public function allTasksByUser(User $user): array
     {
-        return $this->taskRepository->findBy(['user' => $user]);
+        return $this->taskRepository->findBy(['user' => $user], ['createdAt' => 'DESC']);
     }
 
     public function createTaskForUser(User $user, CreateTaskDto $payload): Task
