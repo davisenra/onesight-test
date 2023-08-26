@@ -69,7 +69,7 @@ onMounted(async () => {
                             </p>
                         </div>
                         <div
-                            class="col-span-3 flex flex-col items-center justify-center rounded-md border border-opacity-20 p-4 shadow-md"
+                            class="flex flex-col items-center justify-center rounded-md border border-opacity-20 p-4 shadow-md md:col-span-2 xl:md:col-span-2"
                         >
                             <p class="prose prose-xl font-bold">Tasks</p>
                             <Pie
