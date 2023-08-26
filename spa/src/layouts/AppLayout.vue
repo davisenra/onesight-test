@@ -1,5 +1,10 @@
-<script setup></script>
+<script setup>
+import TaskManagerHeader from '@/components/Core/TaskManagerHeader.vue';
+</script>
 
 <template>
-    <slot />
+    <div class="flex min-h-screen flex-col">
+        <TaskManagerHeader />
+        <slot />
+    </div>
 </template>
