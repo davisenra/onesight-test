@@ -38,8 +38,9 @@ onMounted(async () => {
         <div class="rounded-t-box -mt-4 flex-grow bg-base-200">
             <div class="container mx-auto mt-6 rounded-md bg-white px-6 py-8 shadow">
                 <h2 class="prose prose-2xl font-bold">Tasks</h2>
+                <div class="divider"></div>
                 <p class="prose font-bold">Filters</p>
-                <div class="my-2">
+                <div class="my-3">
                     <input
                         v-model="filter"
                         type="text"
@@ -47,7 +48,6 @@ onMounted(async () => {
                         class="input input-bordered input-sm w-full max-w-xs"
                     />
                 </div>
-                <div class="divider"></div>
                 <div class="flex items-center space-x-3">
                     <p class="prose prose-lg font-bold">Pending tasks</p>
                     <span class="badge badge-accent">
