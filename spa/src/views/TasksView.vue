@@ -9,12 +9,23 @@ const taskStore = useTaskStore();
 
 const tasks = ref([]);
 
+const filter = ref('');
+
+const filteredTasks = computed(() => {
+    return tasks.value.filter((task) => {
+        return filter.value
+            .toLowerCase()
+            .split(' ')
+            .every((v) => task.title.toLowerCase().includes(v));
+    });
+});
+
 const pendingTasks = computed(() => {
-    return tasks.value.filter((task) => task.status === 'pending');
+    return filteredTasks.value.filter((task) => task.status === 'pending');
 });
 
 const finishedTasks = computed(() => {
-    return tasks.value.filter((task) => task.status === 'done');
+    return filteredTasks.value.filter((task) => task.status === 'done');
 });
 
 onMounted(async () => {
@@ -24,15 +35,35 @@ onMounted(async () => {
 
 <template>
     <AppLayout>
-        <div class="bg-base-200 rounded-t-box -mt-4 flex-grow">
+        <div class="rounded-t-box -mt-4 flex-grow bg-base-200">
             <div class="container mx-auto mt-6 rounded-md bg-white px-6 py-8 shadow">
                 <h2 class="prose prose-2xl font-bold">Tasks</h2>
-                <p class="prose prose-lg font-bold">Pending tasks</p>
+                <p class="prose font-bold">Filters</p>
+                <div class="my-2">
+                    <input
+                        v-model="filter"
+                        type="text"
+                        placeholder="Filter by name"
+                        class="input input-bordered input-sm w-full max-w-xs"
+                    />
+                </div>
+                <div class="divider"></div>
+                <div class="flex items-center space-x-3">
+                    <p class="prose prose-lg font-bold">Pending tasks</p>
+                    <span class="badge badge-accent">
+                        {{ pendingTasks.length }}
+                    </span>
+                </div>
                 <TaskList>
                     <TaskCard :task="task" v-for="task in pendingTasks" :key="task.id" />
                 </TaskList>
                 <div class="divider"></div>
-                <p class="prose prose-lg font-bold">Finished tasks</p>
+                <div class="flex items-center space-x-3">
+                    <p class="prose prose-lg font-bold">Finished tasks</p>
+                    <span class="badge badge-accent">
+                        {{ finishedTasks.length }}
+                    </span>
+                </div>
                 <TaskList>
                     <TaskCard :task="task" v-for="task in finishedTasks" :key="task.id" />
                 </TaskList>

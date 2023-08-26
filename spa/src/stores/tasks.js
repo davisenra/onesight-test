@@ -30,6 +30,26 @@ export const useTaskStore = defineStore('tasks', () => {
         return tasks;
     }
 
+    async function toggleTaskStatus(taskId) {
+        const res = await useApiFetch(`/v1/tasks/${taskId}/done`, {
+            method: 'PUT'
+        });
+
+        if (!res.ok) {
+            throw new Error('Error while fetching tasks from server');
+        }
+    }
+
+    async function deleteTask(taskId) {
+        const res = await useApiFetch(`/v1/tasks/${taskId}`, {
+            method: 'DELETE'
+        });
+
+        if (!res.ok) {
+            throw new Error('Error while deleting task from server');
+        }
+    }
+
     /**
      * @param {string} title
      * @param {string|null} description
@@ -57,5 +77,5 @@ export const useTaskStore = defineStore('tasks', () => {
         }
     }
 
-    return { fetchTaskById, fetchTasks, createTask };
+    return { fetchTaskById, fetchTasks, createTask, deleteTask, toggleTaskStatus };
 });
