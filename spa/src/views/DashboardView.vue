@@ -43,7 +43,7 @@ onMounted(async () => {
                     <p class="prose prose-xl my-3 font-bold">
                         Welcome back, {{ dashboardData.user.email }}!
                     </p>
-                    <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                         <div
                             class="flex flex-col items-center justify-center rounded-md border border-opacity-20 p-4 shadow-md"
                         >
@@ -72,7 +72,12 @@ onMounted(async () => {
                             class="col-span-3 flex flex-col items-center justify-center rounded-md border border-opacity-20 p-4 shadow-md"
                         >
                             <p class="prose prose-xl font-bold">Tasks</p>
-                            <Pie :data="pieChartData" :options="{ responsive: false }" />
+                            <Pie
+                                v-if="dashboardData.metadata.totalTasks > 0"
+                                :data="pieChartData"
+                                :options="{ responsive: false }"
+                            />
+                            <p v-else class="prose prose-xl">You currently have no tasks</p>
                         </div>
                     </div>
                 </div>

@@ -35,6 +35,39 @@ export const useAuthStore = defineStore(
             await router.push('/');
         }
 
+        /**
+         * @param {string} email
+         * @param {string} password
+         * @returns {Promise<void>}
+         */
+        async function register({ email, password }) {
+            const payload = {
+                email: email,
+                password: password
+            };
+
+            const res = await useApiFetch('/register', {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                throw Error('Error while trying to register');
+            }
+
+            const { status, message } = await res.json();
+
+            if (!status) {
+                throw Error(message);
+            }
+
+            await login({
+                email: email,
+                password: password,
+                rememberMe: true
+            });
+        }
+
         async function logout() {
             await useApiFetch('/logout', {
                 method: 'POST'
@@ -48,6 +81,7 @@ export const useAuthStore = defineStore(
         return {
             isAuthenticated,
             login,
+            register,
             logout
         };
     },
