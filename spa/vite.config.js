@@ -7,14 +7,7 @@ import mkcert from 'vite-plugin-mkcert';
 export default defineConfig({
     plugins: [vue(), mkcert()],
     server: {
-        https: true,
-        port: 5173,
-        strictPort: true,
-        hmr: {
-            protocol: 'wss',
-            host: 'localhost',
-            port: 5173
-        }
+        https: true
     },
     resolve: {
         alias: {
