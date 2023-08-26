@@ -1,5 +1,7 @@
 # ONESIGHT TEST
 
+![Dashboard](https://i.ibb.co/QpWq9Q3/Screenshot-from-2023-08-26-13-40-45.png)
+
 ### 1. Resumo
 
 Projeto desenvolvido durante processo seletivo para vaga de desenvolvedor PHP&Vue junior.
@@ -46,6 +48,8 @@ consegui gerenciar o tempo para criação dos containers e das imagens.*
 
 **Link da SPA:** https://onesighttest.tech
 
+*Usuário padrão para testes: ```Email: user@onesight.com | Password: totallysafepassword```*
+
 #### 3.1 Backend:
 
 Após clonar o projeto:
@@ -66,3 +70,11 @@ Após clonar o projeto:
     - VITE_APP_BASE: url completa do seu backend (ex: https://api.onesight.com)
 3. Gerar o bundle: ```npm run build```
 4. Iniciar o servidor de desenvolvimento: ```npm run preview```
+
+#### Screenshots:
+
+![App1](https://i.ibb.co/SrJHQ1r/Screenshot-from-2023-08-26-13-41-04.png)
+
+![App2](https://i.ibb.co/QKvkXys/Screenshot-from-2023-08-26-13-40-55.png)
+
+![App3](https://i.ibb.co/2hS3HbS/Screenshot-from-2023-08-26-13-40-49.png)
