@@ -3,6 +3,34 @@ import { useApiFetch } from '@/composables/useApiFetch';
 
 export const useTaskStore = defineStore('tasks', () => {
     /**
+     * @param {number} taskId
+     * @returns {Promise<void>}
+     */
+    async function fetchTaskById(taskId) {
+        const res = await useApiFetch(`/v1/tasks/${taskId}`);
+
+        if (!res.ok) {
+            throw new Error('Error while fetching task from server');
+        }
+
+        const { data: task } = await res.json();
+
+        return task;
+    }
+
+    async function fetchTasks() {
+        const res = await useApiFetch('/v1/tasks');
+
+        if (!res.ok) {
+            throw new Error('Error while fetching tasks from server');
+        }
+
+        const { data: tasks } = await res.json();
+
+        return tasks;
+    }
+
+    /**
      * @param {string} title
      * @param {string|null} description
      * @returns {Promise<void>}
@@ -29,5 +57,5 @@ export const useTaskStore = defineStore('tasks', () => {
         }
     }
 
-    return { createTask };
+    return { fetchTaskById, fetchTasks, createTask };
 });

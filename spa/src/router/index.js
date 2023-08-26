@@ -15,6 +15,11 @@ const router = createRouter({
             component: () => import('@/views/TasksView.vue')
         },
         {
+            name: 'task_show',
+            path: '/tasks/:id',
+            component: () => import('@/views/TaskView.vue')
+        },
+        {
             name: 'tasks_create',
             path: '/tasks/new',
             component: () => import('@/views/CreateTaskView.vue')
@@ -36,9 +41,17 @@ router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     const isAuthenticated = authStore.isAuthenticated;
 
-    if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' });
-    if (['login', 'register'].includes(to.name) && isAuthenticated) next({ name: 'dashboard' });
-    else next();
+    if (to.name !== 'login' && !isAuthenticated) {
+        next({ name: 'login' });
+        return;
+    }
+
+    if (['login', 'register'].includes(to.name) && isAuthenticated) {
+        next({ name: 'dashboard' });
+        return;
+    }
+
+    next();
 });
 
 export default router;
