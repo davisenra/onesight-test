@@ -26,6 +26,6 @@ class RegisterController
         return new JsonResponse([
             'status' => true,
             'message' => 'You were registered successfully',
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 }
